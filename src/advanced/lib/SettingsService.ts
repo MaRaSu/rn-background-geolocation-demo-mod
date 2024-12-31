@@ -80,18 +80,19 @@ const PLUGIN_SETTINGS:any = {
       {label: 'LOWEST', value: BackgroundGeolocation.DESIRED_ACCURACY_LOWEST}
     ], defaultValue: BackgroundGeolocation.DESIRED_ACCURACY_NAVIGATION },
     {name: 'distanceFilter', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 10, 20, 50, 100, 500], defaultValue: 20 },
-    {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'disableElasticity', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     {name: 'elasticityMultiplier', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [0, 1, 2, 3, 5, 10], defaultValue: 1},
     {name: 'geofenceProximityRadius', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [1000, 1500, 2000, 5000, 10000, 100000], defaultValue: 1000 },
     {name: 'stopAfterElapsedMinutes', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [-1, 0, 1, 2, 5, 10, 15], defaultValue: 0},
     {name: 'desiredOdometerAccuracy', group: 'geolocation', dataType: 'integer', inputType: 'select', values: [10, 20, 50, 100, 500], defaultValue: 100},
     {name: 'useSignificantChangesOnly', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'disableLocationAuthorizationAlert', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'false'},
-    {name: 'showsBackgroundLocationIndicator', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'disableLocationAuthorizationAlert', group: 'application', dataType: 'boolean', inputType: 'toggle', values: ['true', 'false'], defaultValue: 'true'},
+    {name: 'showsBackgroundLocationIndicator', group: 'geolocation', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
     // Activity Recognition
     {name: 'stopTimeout', group: 'activity recognition', dataType: 'integer', inputType: 'select', values: [0, 1, 5, 10, 15], defaultValue: 1},
     {name: 'disableMotionActivityUpdates', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
-    {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
+    {name: 'disableStopDetection', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: true},
+    {name: 'pausesLocationUpdatesAutomatically', group: 'activity recognition', dataType: 'boolean', inputType: 'toggle', values: [true, false], defaultValue: false},
 
     // HTTP & Persistence
     {name: 'url', group: 'http', inputType: 'text', dataType: 'string', defaultValue: 'http://your.server.com/endpoint'},

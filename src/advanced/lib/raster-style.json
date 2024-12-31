@@ -1,0 +1,24 @@
+{
+	"version": 8,
+	"name": "Trailmap raster",
+	"sources": {
+		"base": {
+			"type": "raster",
+			"tiles": ["https://c.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+			"tileSize": 256,
+			"maxzoom": 17
+		}
+	},
+	"sprite": "https://marasu.github.io/mtb-trailmap/spritev2",
+	"glyphs": "https://orangemug.github.io/font-glyphs/glyphs/{fontstack}/{range}.pbf",
+	"layers": [
+		{
+			"id": "base",
+			"type": "raster",
+			"source": "base",
+			"minzoom": 0,
+			"maxzoom": 22,
+			"paint": { "raster-resampling": "linear" }
+		}			
+	]
+}

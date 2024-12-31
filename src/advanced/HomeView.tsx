@@ -32,7 +32,7 @@ import BackgroundFetch from "react-native-background-fetch";
 
 import SettingsService from './lib/SettingsService';
 import FABMenu from './FABMenu';
-import TSMapView from './TSMapView';
+import TSMapView from './TSMapViewAlt';
 
 import ENV from '../ENV';
 import {COLORS, SOUNDS} from './lib/config';
@@ -227,7 +227,9 @@ const HomeView = ({route, navigation}) => {
     setEnabled(value);
     if (value) {
       if (state.trackingMode == 1) {
-        BackgroundGeolocation.start();
+      await BackgroundGeolocation.start();
+      await BackgroundGeolocation.changePace(true);
+      setIsMoving(true);
       } else {
         BackgroundGeolocation.startGeofences();
       }
