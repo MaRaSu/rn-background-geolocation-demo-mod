@@ -32,7 +32,8 @@ import BackgroundFetch from "react-native-background-fetch";
 
 import SettingsService from './lib/SettingsService';
 import FABMenu from './FABMenu';
-import TSMapView from './TSMapViewAlt';
+import TSMapViewAlt from './TSMapViewAlt';
+import TSMapView from './TSMapView';
 
 import ENV from '../ENV';
 import {COLORS, SOUNDS} from './lib/config';
@@ -48,6 +49,7 @@ const HomeView = ({route, navigation}) => {
   const [motionActivityEvent, setMotionActivityEvent] = React.useState<MotionActivityEvent>(null);
   const [testClicks, setTestClicks] = React.useState(0);
   const [clickBufferTimeout, setClickBufferTimeout] = React.useState<any>(0);
+  const [altMapLibrary, setAltMapLibrary] = React.useState(false);
 
   // Handy Util class for managing app/plugin Settings.
   const settingsService = SettingsService.getInstance();
@@ -227,9 +229,9 @@ const HomeView = ({route, navigation}) => {
     setEnabled(value);
     if (value) {
       if (state.trackingMode == 1) {
-      await BackgroundGeolocation.start();
-      await BackgroundGeolocation.changePace(true);
-      setIsMoving(true);
+        await BackgroundGeolocation.start();
+        await BackgroundGeolocation.changePace(true);
+        setIsMoving(true);
       } else {
         BackgroundGeolocation.startGeofences();
       }
@@ -267,7 +269,7 @@ const HomeView = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TSMapView style={styles.map} navigation={navigation} />
+      {altMapLibrary ? <TSMapViewAlt style={styles.map} navigation={navigation} /> : <TSMapView style={styles.map} navigation={navigation} />}
       <View style={{backgroundColor: COLORS.gold, height: 56, flexDirection: 'row'}}>
         <View style={{justifyContent:'center'}}>
           <Button
@@ -296,7 +298,7 @@ const HomeView = ({route, navigation}) => {
         </View>
       </View>
 
-      <FABMenu navigation={navigation} onResetOdometer={(location:Location) => setOdometer(location.odometer)}/>
+      <FABMenu navigation={navigation} onResetOdometer={(location:Location) => setOdometer(location.odometer)} onToggleMapLibrary={() => setAltMapLibrary(!altMapLibrary) }/>
 
     </SafeAreaView>
   );

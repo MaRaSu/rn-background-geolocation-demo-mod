@@ -26,6 +26,7 @@ const ACTION_BUTTON_OFFSET_Y = (Platform.OS === 'ios') ? 90 : 60;
 
 interface Props {
   onResetOdometer:Function
+  onToggleMapLibrary:Function
 };
 
 const FABMenu = (props:Props) => {
@@ -37,6 +38,7 @@ const FABMenu = (props:Props) => {
   const [isDestroyingLocations, setIsDestroyingLocations] = React.useState(false);
 
   const navigation = props.navigation;
+  const toggleMapLibrary = props.onToggleMapLibrary;
 
   const settingsService = SettingsService.getInstance();
 
@@ -68,6 +70,9 @@ const FABMenu = (props:Props) => {
         break;
       case 'requestPermission':
         requestPermission();
+        break;
+      case 'toggleMapLibrary':
+        toggleMapLibrary();
         break;
     }
   }
@@ -186,6 +191,12 @@ const FABMenu = (props:Props) => {
       transitionDuration={0}
       overlayColor="transparent"
     >
+      <SpeedDial.Action
+        title="Change Map Library"
+        onPress={() => onClickAction('toggleMapLibrary')}
+        icon={<Icon name="map" type='ionicon' style={styles.itemIcon} />}
+        color={COLORS.gold}
+      />
       <SpeedDial.Action
         title="Destroy locations"
         onPress={() => onClickAction('destroyLocations')}
