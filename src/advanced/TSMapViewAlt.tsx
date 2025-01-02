@@ -27,10 +27,10 @@ import {trigger as hapticFeedback} from "react-native-haptic-feedback";
 
 //import MapView, {Marker, Polyline, Circle, Polygon} from 'react-native-maps';
 import {MapView, Camera, ShapeSource, LineLayer, CircleLayer, UserLocation, UserTrackingMode } from '@maplibre/maplibre-react-native';
-import activeMapStyleJson from './lib/raster-style.json';
+import activeMapStyleAltJson from './lib/raster-style.json';
 //import activeMapStyleAltJson from './lib/raster-style-alt.json';
 //import activeMapStyleAltJson from './lib/trailmap-style.json';
-const activeMapStyleAltJson = 'https://api.maptiler.com/maps/bright-v2/style.json?key=QEBPM97mkMISqxdnf1Oy';
+const activeMapStyleJson = 'https://api.maptiler.com/maps/bright-v2/style.json?key=QEBPM97mkMISqxdnf1Oy';
 
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
@@ -770,7 +770,7 @@ const TSMapView = (props) => {
 					x: 10,
 					y: 50
 				}}
-				attributionEnabled={ false}
+				attributionEnabled={false}
 				mapStyle={mapStyle ? activeMapStyleJson : activeMapStyleAltJson}
 				onPress={handlePress}
 				>

@@ -29,6 +29,7 @@ import BackgroundGeolocation, {
 } from "../react-native-background-geolocation";
 
 import BackgroundFetch from "react-native-background-fetch";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SettingsService from './lib/SettingsService';
 import FABMenu from './FABMenu';
@@ -49,10 +50,23 @@ const HomeView = ({route, navigation}) => {
   const [motionActivityEvent, setMotionActivityEvent] = React.useState<MotionActivityEvent>(null);
   const [testClicks, setTestClicks] = React.useState(0);
   const [clickBufferTimeout, setClickBufferTimeout] = React.useState<any>(0);
-  const [altMapLibrary, setAltMapLibrary] = React.useState(false);
+  const [altMapLibrary, setAltMapLibrary] = React.useState<boolean | undefined>(undefined);
 
   // Handy Util class for managing app/plugin Settings.
   const settingsService = SettingsService.getInstance();
+
+  React.useLayoutEffect(() => {
+    // Restore Map Library preference from AsyncStorage.
+    if (altMapLibrary === undefined) {
+    AsyncStorage.getItem('@transistorsoft:altMapLibrary').then((value) => {
+      if (value != null) {
+        setAltMapLibrary(JSON.parse(value));
+      } else {
+        setAltMapLibrary(false);
+      }
+    });
+    }
+  });
 
   /// Init BackgroundGeolocation when view renders.
   React.useEffect(() => {
@@ -178,7 +192,7 @@ const HomeView = ({route, navigation}) => {
       distanceFilter: 10,
       stopTimeout: 5,
       // Permissions
-      locationAuthorizationRequest: 'Always',
+      locationAuthorizationRequest: 'WhenInUse',
       backgroundPermissionRationale: {
         title: "Allow {applicationName} to access this device's location even when closed or not in use.",
         message: "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
@@ -267,6 +281,11 @@ const HomeView = ({route, navigation}) => {
     setIsMoving(!isMoving);
   }
 
+  const onToggleMapLibrary = () => {
+    setAltMapLibrary(!altMapLibrary);
+    AsyncStorage.setItem('@transistorsoft:altMapLibrary', JSON.stringify(!altMapLibrary));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {altMapLibrary ? <TSMapViewAlt style={styles.map} navigation={navigation} /> : <TSMapView style={styles.map} navigation={navigation} />}
@@ -298,7 +317,7 @@ const HomeView = ({route, navigation}) => {
         </View>
       </View>
 
-      <FABMenu navigation={navigation} onResetOdometer={(location:Location) => setOdometer(location.odometer)} onToggleMapLibrary={() => setAltMapLibrary(!altMapLibrary) }/>
+      <FABMenu navigation={navigation} onResetOdometer={(location:Location) => setOdometer(location.odometer)} onToggleMapLibrary={onToggleMapLibrary}/>
 
     </SafeAreaView>
   );
